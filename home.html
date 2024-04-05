@@ -3,9 +3,102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head> 
+    <title>Opium Label</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Estilos personalizados */
+      body {
+        background-color: #000; /* Fundo preto */
+        color: #ffffff; /* Texto branco */
+        font-family: Arial, sans-serif; /* Definir a fonte */
+      }
+      .artist-card {
+        margin-bottom: 20px;
+        border: 3px solid #fff; /* Contorno branco */
+        border-radius: 10px; /* Cantos arredondados */
+        overflow: hidden; /* Ocultar qualquer parte da imagem que ultrapasse o contorno */
+        text-align: center; /* Centralizar a imagem horizontalmente */
+      }
+      .artist-card img {
+        max-width: 630px; /* Definir um tamanho máximo para as imagens */
+        width: 100%;
+        height: auto; /* Deixar a altura automática para manter a proporção original da imagem */
+        display: inline-block; /* Permitir centralizar a imagem horizontalmente */
+      }
+      .navbar-brand img {
+        max-width: 50px; /* Tornar o logotipo um pouco menor */
+        height: auto;
+      }
+      .row-cols-md-2 [class^="col"] {
+        padding-right: 25px; /* Adicionar espaçamento lateral direito entre as colunas */
+        padding-left: 25px; /* Adicionar espaçamento lateral esquerdo entre as colunas */
+      }
+      .navbar {
+        background-color: #000 !important; /* Cor de fundo da barra de navegação preta */
+      }
+    </style>
+  </head>
   <body>
-    <br>
+    <!-- Barra de navegação com imagem clicável -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo2.png" alt="Opium Label" />
+        </a>
+      </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <div class="container mt-4">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <!-- Playboi Carti -->
+        <div class="col">
+          <div class="artist-card">
+            <a href="carti.html">
+              <img
+                src="images/pbCarti.jpg"
+                class="img-fluid"
+                alt="Playboi Carti"
+              />
+            </a>
+          </div>
+        </div>
+        <!-- Ken Carson -->
+        <div class="col">
+          <div class="artist-card">
+            <a href="ken.html">
+              <img src="images/image.png" class="img-fluid" alt="Ken Carson" />
+            </a>
+          </div>
+        </div>
+        <!-- Destroy Lonely -->
+        <div class="col">
+          <div class="artist-card">
+            <a href="lonely.html">
+              <img
+                src="images/destruidorsolitario.jpg"
+                class="img-fluid"
+                alt="Destroy Lonely"
+              />
+            </a>
+          </div>
+        </div>
+        <!-- Homixide Beno -->
+        <div class="col">
+          <div class="artist-card">
+            <a href="hmxbeno.html">
+              <img
+                src="images/beno.jpg"
+                class="img-fluid"
+                alt="Homixide Beno"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
