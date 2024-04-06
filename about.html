@@ -1,39 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página com Fundo Preto</title>
-<style>
-  body {
-    background: url('images/meechie.jpg') ;
-    
-    background-color: black; /* Define o fundo da página como preto */
-    
-    background-size: cover; /* Garante que a imagem de fundo cubra toda a área disponível */
-    display: flex; /* Utiliza o modelo de layout flexível */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    height: 100vh; /* Define a altura da página como 100% da altura da janela do navegador */
-    margin: 0; /* Remove as margens padrão do corpo da página */
-  }
-  
-  .content {
-    text-align: center; /* Centraliza o texto horizontalmente */
-    max-width: 600px; /* Define a largura máxima do conteúdo */
-    margin: 0 20px; /* Adiciona margem para o espaçamento */
-  }
-</style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <style>
+      body {
+        background: url("images/meechie.jpg");
+        background-color: black; /* Define o fundo da página como preto */
+        background-size: cover; /* Garante que a imagem de fundo cubra toda a área disponível */
+        margin: 0; /* Remove as margens padrão do corpo da página */
+      }
 
-<!-- Conteúdo da sua página aqui -->
-<div class="content">
-  <h1>About us</h1>
-  <p>Opium é uma gravadora e coletivo de rap americano fundado em 2019 pelo rapper americano Playboi Carti .  A gravadora, com sede em Atlanta, Geórgia , atualmente possui quatro artistas, todos nativos da cidade; O próprio Playboi Carti, os rappers Ken Carson e Destroy Lonely , e a dupla Homixide Gang. A gravadora também é afiliada a vários produtores, incluindo KP Beatz, F1lthy e Art Dealer, que trabalharam extensivamente no segundo álbum de estúdio de Playboi Carti, Whole Lotta Red . 
+      .navbar {
+        background-color: #000 !important; /* Cor de fundo da barra de navegação preta */
+        position: fixed; /* Fixa a navbar no topo da página */
+        width: 100%; /* Define a largura total */
+        z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+      }
 
-    Os artistas do ópio geralmente apresentam um som e uma estética de rap sombrio que se baseia na cena do rap de raiva de Atlanta e é influenciado pela era punk rock dos anos 70 e 80 . O estilo de nicho de seus artistas se afasta dos trap rappers convencionais e conquistou sua própria base de fãs cult </p>
-</div>
+      .navbar-brand img {
+        max-width: 50px; /* Tornar o logotipo um pouco menor */
+        height: auto;
+        margin-right: 20px; /* Espaçamento à direita */
+      }
 
-</body>
+      .navbar-nav {
+        margin-left: auto; /* Move os itens da navbar para a direita */
+        margin-right: 20px; /* Espaçamento à direita */
+      }
+
+      .create-account-text {
+        color: #000; /* Cor do texto preto */
+        background-color: #fff; /* Cor de fundo branca */
+        padding: 5px 10px; /* Adicionar preenchimento ao redor do texto */
+        border-radius: 5px; /* Cantos arredondados */
+        text-decoration: none; /* Remover sublinhado */
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        font-weight: bold; /* Tornar o texto em negrito */
+      }
+
+      .create-account-text:hover {
+        color: #fff; /* Mudar a cor do texto para branco ao passar o mouse */
+        background-color: #000; /* Mudar a cor de fundo para preto ao passar o mouse */
+      }
+
+      .about-text {
+        color: #fff; /* Cor do texto branco */
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        text-decoration: none; /* Remover sublinhado */
+        margin-right: 20px; /* Espaçamento à direita */
+      }
+
+      .about-text:hover {
+        text-decoration: underline; /* Adicionar sublinhado ao passar o mouse */
+      }
+
+      .content {
+        text-align: center; /* Centraliza o texto horizontalmente */
+        max-width: 600px; /* Define a largura máxima do conteúdo */
+        margin: 80px auto; /* Adiciona margem superior para evitar sobreposição com a navbar */
+        color: white; /* Define a cor do texto como branco */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home.html">
+          <!-- Adicione o link desejado aqui -->
+          <img src="images/logo2.png" alt="Opium Label" />
+        </a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link about-text" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link create-account-text" href="criar_conta.html"
+              >Login</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Conteúdo da sua página aqui -->
+    <div class="content">
+      <h1>About us</h1>
+      <p>
+        Opium é uma gravadora e coletivo de rap americano fundado em 2019 pelo
+        rapper americano Playboi Carti . A gravadora, com sede em Atlanta,
+        Geórgia , atualmente possui quatro artistas, todos nativos da cidade; O
+        próprio Playboi Carti, os rappers Ken Carson e Destroy Lonely , e a
+        dupla Homixide Gang. A gravadora também é afiliada a vários produtores,
+        incluindo KP Beatz, F1lthy e Art Dealer, que trabalharam extensivamente
+        no segundo álbum de estúdio de Playboi Carti, Whole Lotta Red . Os
+        artistas do ópio geralmente apresentam um som e uma estética de rap
+        sombrio que se baseia na cena do rap de raiva de Atlanta e é
+        influenciado pela era punk rock dos anos 70 e 80 . O estilo de nicho de
+        seus artistas se afasta dos trap rappers convencionais e conquistou sua
+        própria base de fãs cult
+      </p>
+    </div>
+  </body>
 </html>
