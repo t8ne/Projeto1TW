@@ -11,13 +11,14 @@
     <link rel="icon" type="image/png" href="images/logo.png" />
     <style>
       body {
-        background-color: #272626; /* Define o fundo da página */
         font-family: Arial, sans-serif; /* Define a fonte do texto */
         display: flex; /* Utiliza o modelo de layout flexível */
         justify-content: center; /* Centraliza o conteúdo horizontalmente */
         align-items: center; /* Centraliza o conteúdo verticalmente */
         height: 100vh; /* Define a altura da página como 100% da altura da janela do navegador */
         margin: 0; /* Remove as margens padrão do corpo da página */
+        background-image: url("images/conc.jpg"); /* Define a imagem de fundo */
+        background-size: cover; /* Garante que a imagem de fundo cubra toda a área disponível */
       }
 
       .login-container {
@@ -29,6 +30,7 @@
 
       .login-container h2 {
         text-align: center; /* Centraliza o texto do cabeçalho */
+        font-weight: bold;
       }
 
       .login-form {
@@ -51,6 +53,7 @@
         border: none; /* Remove a borda do botão de login */
         border-radius: 5px; /* Adiciona cantos arredondados ao botão de login */
         cursor: pointer; /* Altera o cursor ao passar o mouse sobre o botão de login */
+        font-weight: bold;
       }
       .navbar-brand img {
         max-width: 50px; /* Tornar o logotipo um pouco menor */
@@ -86,6 +89,46 @@
       .about-text:hover {
         text-decoration: underline; /* Adicionar sublinhado ao passar o mouse */
       }
+      /* Estilos para o popup */
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Cor de fundo escura com opacidade */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999; /* Para garantir que o popup esteja na frente de outros elementos */
+      }
+
+      .popup-content {
+        background-color: #333232;
+        color: #fff;
+        padding: 40px; /* Aumenta o espaçamento interno */
+        border-radius: 10px;
+        text-align: center;
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        width: 25%; /* Define a largura do popup */
+      }
+
+      .popup-button {
+        margin-top: 20px;
+        background-color: #000; /* Altera a cor de fundo para preto */
+        color: #fff; /* Altera a cor do texto para branco */
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold; /* Torna o texto em negrito */
+        font-family: "Courier New", Courier, monospace;
+      }
     </style>
   </head>
   <body>
@@ -110,11 +153,39 @@
 
     <div class="login-container">
       <h2>Login 🞹</h2>
-      <form class="login-form 🞹">
+      <form class="login-form 🞹" id="login-form">
         <input type="text" placeholder="Username " required />
         <input type="password" placeholder="Password" required />
         <button type="submit">Entrar</button>
       </form>
     </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup" style="display: none">
+      <div class="popup-content">
+        <h3 style="font-family: 'Old English Text MT', serif">Conta Criada</h3>
+        <button class="popup-button" onclick="returnHome()">OK</button>
+      </div>
+    </div>
+
+    <script>
+      // Função para exibir o popup
+      function showPopup() {
+        document.getElementById("popup").style.display = "flex";
+      }
+
+      // Função para voltar para a página home
+      function returnHome() {
+        window.location.href = "home.html";
+      }
+
+      // Adiciona um evento de clique ao formulário de login
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Impede o envio do formulário
+          showPopup(); // Exibe o popup
+        });
+    </script>
   </body>
 </html>
