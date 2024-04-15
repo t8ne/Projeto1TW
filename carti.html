@@ -13,6 +13,9 @@
         body{
           font-family: Arial, sans-serif;
           display:flex;
+          justify-content: center; 
+          align-items: center;
+          height: 100vh;
           background-image: url(images/carti.jpg);
           background-size: cover;
           margin:0;
@@ -21,8 +24,15 @@
         .carti-container {
           background-color: white;
           border-radius: 15px;
-          padding: 30px; /* Adiciona espaçamento interno ao redor do contêiner */
+          width: 500px; /* change the width of the container */
+          height: 640px;
+          padding: 70px; /* Adiciona espaçamento interno ao redor do contêiner */
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(40%, -43.5%);
+          font-size: 10px;
         }
 
         .carti-container h2 {
@@ -41,6 +51,82 @@
         border: 1px solid #000000; /* Adiciona uma borda aos campos de entrada */
         border-radius: 5px;
         }
+
+        .carti-form button {
+        width: 100%; /* Define a largura do botão de login como 100% */
+        padding: 10px; /* Adiciona espaçamento interno ao botão de login */
+        background-color: #171717; /* Define a cor de fundo do botão de login */
+        color: rgb(255, 255, 255); /* Define a cor do texto do botão de login */
+        border: none; /* Remove a borda do botão de login */
+        border-radius: 5px; /* Adiciona cantos arredondados ao botão de login */
+        cursor: pointer; /* Altera o cursor ao passar o mouse sobre o botão de login */
+        font-weight: bold;
+        }
+
+        .navbar-brand img {
+          max-width: 50px; /* Tornar o logotipo um pouco menor */
+          height: auto;
+        }
+
+        .navbar {
+        background-color: #000 !important; /* Cor de fundo da barra de navegação preta */
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .about-text {
+        margin-right: 20px; /* Espaçamento à direita */
+        color: #fff; /* Cor do texto branco */
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        text-decoration: none; /* Remover sublinhado */
+      }
+      .about-text:hover {
+        text-decoration: underline; /* Adicionar sublinhado ao passar o mouse */
+      }
+      /* Estilos para o popup */
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Cor de fundo escura com opacidade */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999; /* Para garantir que o popup esteja na frente de outros elementos */
+      }
+
+      .popup-content {
+        background-color: #111111;
+        font-size: 10px;
+        color: #fff;
+        padding: 40px; /* Aumenta o espaçamento interno */
+        border-radius: 10px;
+        text-align: center;
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        width: 25%; /* Define a largura do popup */
+      }
+
+      .popup-button {
+        margin-top: 40px;
+        background-color: #070707; /* Altera a cor de fundo para preto */
+        color: #fff; /* Altera a cor do texto para branco */
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold; /* Torna o texto em negrito */
+        font-family: Arial, sans-serif;
+        width: 100%;
+      }
       </style>
   </head>
   <body>
@@ -56,5 +142,20 @@
           </li>
           <li class="nav-item">
             <a class="nav-link create-account-text" href="criar_conta.html"
+              >Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class = "carti-container">
+      <h2> OPIUM </h2>
+      <h2> 🞹 </h2>
+      <h2> </h2>
+      <h2> Playboi Carti</h2>
+      <h3 style="font-family: 'Old English Text MT', serif"> O rapper Playboi Carti nascido em 13 de setembro de 1996 em Atlanta, Geórgia, EUA é o fundador e músico principal da gravadora OPIUM 🞹. É um dos rappers mais influentes da nova geração e é dos pioneiros da nova onde "rage rap". </h3>
+    </div>
+
+    
   </body>
 </html>
