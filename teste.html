@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const infoArista = async () => {
+        let strHtml = "";
+        //alert("Teste");
+        const response = await fetch(
+          "https://run.mocky.io/v3/182d6730-0227-49f8-b0fd-5b0399dc3df4"
+        );
+        //console.log(response.item);
+        const lv = await response.json();
+        console.log(lv);
+        for (const album of lv.items) {
+          alert(album.images[0].url);
+        }
+      };
+      infoArista();
+    </script>
+  </body>
+</html>
