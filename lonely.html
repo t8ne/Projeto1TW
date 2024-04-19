@@ -165,7 +165,12 @@
         <h2>Destroy Lonely</h2>
         <br />
         <h3 style="font-family: 'Jockey One', serif">
-          Bobby Wardell Sandimanie III, conhecido por seu nome artístico Destroy Lonely, filho do rapper I-20 que pertencia ao grupo do famoso Ludacris, é um rapper, cantor e compositor americano. O artista é o rapper que mais tenta incorporar aspetos visuais na sua música usando vídeoclipes esteticamente apelativos e sombrios assim como um trailer para o seu único álbum "If looks Could Kill".
+          Bobby Wardell Sandimanie III, conhecido por seu nome artístico Destroy
+          Lonely, filho do rapper I-20 que pertencia ao grupo do famoso
+          Ludacris, é um rapper, cantor e compositor americano. O artista é o
+          rapper que mais tenta incorporar aspetos visuais na sua música usando
+          vídeoclipes esteticamente apelativos e sombrios assim como um trailer
+          para o seu único álbum "If looks Could Kill".
         </h3>
       </div>
     </div>
@@ -181,6 +186,32 @@
         />
       </div>
     </div>
+
+    <div class="container mt-4">
+      <h1>Álbuns</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Foto do álbum</th>
+            <th>Nome do álbum</th>
+          </tr>
+        </thead>
+        <tbody id="albums">
+          <tr>
+            <td>
+              <img
+                src="images\kenzinho.jpg"
+                width="15%"
+                height="15%"
+                alt="nome"
+              />
+            </td>
+            <td>Teste</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <script>
       const infoArista = async () => {
         let strHtml = "";
@@ -189,10 +220,26 @@
           "https://run.mocky.io/v3/182d6730-0227-49f8-b0fd-5b0399dc3df4"
         );
         //console.log(response.item);
+        linhas = "";
         const lv = await response.json();
         console.log(lv);
         for (const album of lv.items) {
-          alert(album.images[0].url);
+          linhas += `
+          <tr>
+            <td>
+              <img
+                src="${album.images[0].url}"
+                width="15%"
+                height="15%"
+                alt="nome"
+              />
+            </td>
+            <td>${album.name}</td>
+          </tr>
+          
+          `;
+          //alert(album.images[0].url);
+          document.getElementById("albums").innerHTML = linhas;
         }
       };
       infoArista();
