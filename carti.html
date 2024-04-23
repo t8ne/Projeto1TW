@@ -28,6 +28,20 @@
         height: 778px;
         background-color: #000000;
       }
+      .create-account-text {
+        margin-right: 10px; /* Espaçamento à direita */
+        color: #000; /* Cor do texto preto */
+        background-color: #fff; /* Cor de fundo branca */
+        padding: 5px 10px; /* Adicionar preenchimento ao redor do texto */
+        border-radius: 5px; /* Cantos arredondados */
+        text-decoration: none; /* Remover sublinhado */
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        font-weight: bold; /* Tornar o texto em negrito */
+      }
+      .create-account-text:hover {
+        color: #fff; /* Mudar a cor do texto para branco ao passar o mouse */
+        background-color: #000; /* Mudar a cor de fundo para preto ao passar o mouse */
+      }
 
       .carti-container {
         background-color: white;
@@ -168,56 +182,99 @@
           O rapper Playboi Carti nascido em 13 de setembro de 1996 em Atlanta,
           Geórgia, EUA é o fundador e músico principal da gravadora OPIUM 🞹. É
           um dos rappers mais influentes da nova geração e é dos pioneiros da
-          nova onde "rage rap". Conta com 3 albúns que contribuiram para uma mudança no panorama do trap que renovou o género com novos estilos.
+          nova onde "rage rap". Conta com 3 albúns que contribuiram para uma
+          mudança no panorama do trap que renovou o género com novos estilos.
         </h3>
       </div>
     </div>
-   
-    </div>
+
     <div class="container mt-4">
       <h1>Álbuns</h1>
       <table class="table">
-          <thead>
-              <tr>
-                  <th>Foto do álbum</th>
-                  <th>Nome do álbum</th>
-              </tr>
-          </thead>
-          <tbody id="albums-table-body">
-              <!-- Dados dos álbuns serão preenchidos aqui -->
-          </tbody>
+        <thead>
+          <tr>
+            <th>Foto do álbum</th>
+            <th>Nome do álbum</th>
+          </tr>
+        </thead>
+        <tbody id="albums">
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
       </table>
-  </div>
-  
-  <script>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script>
       const infoArista = async () => {
-          const response = await fetch("https://run.mocky.io/v3/182d6730-0227-49f8-b0fd-5b0399dc3df4");
-          const data = await response.json();
-          const albumsTableBody = document.getElementById("albums-table-body");
-  
-          for (const album of data.items) {
-              // Crie uma nova linha para cada álbum
-              const row = document.createElement("tr");
-  
-              // Coluna para a foto do álbum
-              const photoCell = document.createElement("td");
-              const img = document.createElement("img");
-              img.src = album.images[0].url; // URL da foto do álbum
-              img.alt = album.name; // Nome do álbum como texto alternativo
-              img.style.width = "100px"; // Definir a largura da imagem
-              photoCell.appendChild(img);
-              row.appendChild(photoCell);
-  
-              // Coluna para o nome do álbum
-              const nameCell = document.createElement("td");
-              nameCell.textContent = album.name;
-              row.appendChild(nameCell);
-  
-              // Adicionar a linha à tabela
-              albumsTableBody.appendChild(row);
-          }
+        const response = await fetch(
+          "https://run.mocky.io/v3/182d6730-0227-49f8-b0fd-5b0399dc3df4"
+        );
+        const albums = await response.json();
+
+        let albumRows = "";
+        for (let i = 0; i < albums.items.length; i++) {
+          const album = albums.items[i];
+          albumRows += `
+            <tr>
+              <td>
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="${album.images[0].url}" width="100px" height="100px" alt="${album.name}" />
+                </button>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header">${album.name}</li>
+                  <li class="dropdown-divider"></li>
+                  <li><a class="dropdown-item"><b>Tracks</b></a></li>
+                  <div class="container">
+                    <div class="row" id="tracks_${i}_${album.id}">
+                      Loading tracks...
+                    </div>
+                  </div>
+                </ul>
+              </td>
+              <td>${album.name}</td>
+            </tr>
+          `;
+
+          fetchTracks(album.id, i);
+        }
+
+        document.getElementById("albums").innerHTML = albumRows;
       };
-  
-      // Chama a função para preencher a tabela com os dados dos álbuns
+
+      const fetchTracks = async (albumId, index) => {
+        const response = await fetch(
+          [
+            "https://run.mocky.io/v3/fafd5d91-f217-4bce-98c0-3fbf5581db5d",
+            "https://run.mocky.io/v3/3cc0b54f-3379-4986-8f9f-a66ae7c3c8df",
+            "https://run.mocky.io/v3/c935150e-6fd0-4c31-9ce5-8173ca48bbc1",
+            "https://run.mocky.io/v3/da9a4350-f27d-42f5-b29e-9fd38a20de16",
+          ][index]
+        );
+        const tracks = await response.json();
+        let tracksHtml = "";
+        for (let i = 0; i < tracks.items.length; i++) {
+          const track = tracks.items[i];
+          const duration = millisToMinutesAndSeconds(track.duration_ms);
+          tracksHtml += `
+            <div class="col-md-6">${track.name} - ${duration}</div>
+          `;
+        }
+        document.getElementById(`tracks_${index}_${albumId}`).innerHTML =
+          tracksHtml;
+      };
+
+      const millisToMinutesAndSeconds = (millis) => {
+        const minutes = Math.floor(millis / 60000);
+        const seconds = ((millis % 60000) / 1000).toFixed(0);
+        return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+      };
+
       infoArista();
-  </script>
+    </script>
+  </body>
+</html>
