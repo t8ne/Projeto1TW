@@ -93,6 +93,20 @@
       .about-text:hover {
         text-decoration: underline; /* Adicionar sublinhado ao passar o mouse */
       }
+      .create-account-text {
+        margin-right: 10px; /* Espaçamento à direita */
+        color: #000; /* Cor do texto preto */
+        background-color: #fff; /* Cor de fundo branca */
+        padding: 5px 10px; /* Adicionar preenchimento ao redor do texto */
+        border-radius: 5px; /* Cantos arredondados */
+        text-decoration: none; /* Remover sublinhado */
+        font-family: "Old English Text MT", serif; /* Definir a fonte Old English */
+        font-weight: bold; /* Tornar o texto em negrito */
+      }
+      .create-account-text:hover {
+        color: #fff; /* Mudar a cor do texto para branco ao passar o mouse */
+        background-color: #000; /* Mudar a cor de fundo para preto ao passar o mouse */
+      }
       /* Estilos para o popup */
       .popup {
         position: fixed;
@@ -165,7 +179,11 @@
         <h2>Ken Carson</h2>
         <br />
         <h3 style="font-family: 'Jockey One', serif">
-          Kenyatta Lee Frazier Jr., conhecido profissionalmente como Ken Carson, é um rapper e produtor musical americano. Ele assinou com a gravadora Opium de Playboi Carti, em 2019. Ken conta com 3 albúns na sua discografia, em que utiliza bass e distorção nos seus sons e é o artista com o tipo de som mais agressivo da gravadora OPIUM.
+          Kenyatta Lee Frazier Jr., conhecido profissionalmente como Ken Carson,
+          é um rapper e produtor musical americano. Ele assinou com a gravadora
+          Opium de Playboi Carti, em 2019. Ken conta com 3 albúns na sua
+          discografia, em que utiliza bass e distorção nos seus sons e é o
+          artista com o tipo de som mais agressivo da gravadora OPIUM.
         </h3>
       </div>
     </div>
@@ -181,51 +199,82 @@
         </thead>
         <tbody id="albums">
           <tr>
-            <td>
-              <img
-                src="images\kenzinho.jpg"
-                width="15%"
-                height="15%"
-                alt="nome"
-              />
-            </td>
-            <td>Teste</td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
       const infoArista = async () => {
-        let strHtml = "";
-        //alert("Teste");
         const response = await fetch(
-          "https://run.mocky.io/v3/182d6730-0227-49f8-b0fd-5b0399dc3df4"
+          "https://run.mocky.io/v3/f7025602-e31f-41e2-89a6-7f41c2ac3811"
         );
-        //console.log(response.item);
-        linhas = "";
-        const lv = await response.json();
-        console.log(lv);
-        for (const album of lv.items) {
-          linhas += `
-          <tr>
-            <td>
-              <img
-                src="${album.images[0].url}"
-                width="15%"
-                height="15%"
-                alt="nome"
-              />
-            </td>
-            <td>${album.name}</td>
-          </tr>
-          
+        const albums = await response.json();
+
+        let albumRows = "";
+        for (let i = 0; i < albums.items.length; i++) {
+          const album = albums.items[i];
+          albumRows += `
+            <tr>
+              <td>
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="${album.images[0].url}" width="100px" height="100px" alt="${album.name}" />
+                </button>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header">${album.name}</li>
+                  <li class="dropdown-divider"></li>
+                  <li><a class="dropdown-item"><b>Tracks</b></a></li>
+                  <div class="container">
+                    <div class="row" id="tracks_${i}_${album.id}">
+                      Loading tracks...
+                    </div>
+                  </div>
+                </ul>
+              </td>
+              <td>${album.name}</td>
+            </tr>
           `;
-          //alert(album.images[0].url);
-          document.getElementById("albums").innerHTML = linhas;
+
+          fetchTracks(album.id, i);
         }
+
+        document.getElementById("albums").innerHTML = albumRows;
       };
+
+      const fetchTracks = async (albumId, index) => {
+        const response = await fetch(
+          [
+            "https://run.mocky.io/v3/6f50fe5c-6254-47b1-8f7e-a6bf4ebf545e",
+            "https://run.mocky.io/v3/e692fd49-53db-4529-a5e2-7c05df85da4c",
+            "https://run.mocky.io/v3/43c5874a-861c-4f25-b3b6-a73faa95f534",
+            "https://run.mocky.io/v3/b2b10ce2-9a3d-4330-a7bd-2b73840c035d",
+          ][index]
+        );
+        const tracks = await response.json();
+        let tracksHtml = "";
+        for (let i = 0; i < tracks.items.length; i++) {
+          const track = tracks.items[i];
+          const duration = millisToMinutesAndSeconds(track.duration_ms);
+          tracksHtml += `
+            <div class="col-md-6">${track.name} - ${duration}</div>
+          `;
+        }
+        document.getElementById(`tracks_${index}_${albumId}`).innerHTML =
+          tracksHtml;
+      };
+
+      const millisToMinutesAndSeconds = (millis) => {
+        const minutes = Math.floor(millis / 60000);
+        const seconds = ((millis % 60000) / 1000).toFixed(0);
+        return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+      };
+
       infoArista();
     </script>
-</body>
+  </body>
 </html>
