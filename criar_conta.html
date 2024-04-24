@@ -153,10 +153,20 @@
     </nav>
 
     <div class="login-container">
-      <h2>Login 🞹</h2>
+      <h2>Login/Criar Conta 🞹</h2>
       <form class="login-form 🞹" id="login-form">
-        <input type="text" placeholder="Username" id="username" required />
-        <input type="password" placeholder="Password" id="password" required />
+        <input
+          type="text"
+          placeholder="Nome de Usuário"
+          id="username"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Palavra-Passe"
+          id="password"
+          required
+        />
         <button type="submit">Entrar</button>
       </form>
     </div>
@@ -208,9 +218,7 @@
               // Check if username exists in JSON data
               if (users.hasOwnProperty(username)) {
                 // Check if password matches for admin username
-                if (username === "admin" && password === "admin") {
-                  window.location.href = "home.html";
-                } else if (users[username] === password) {
+                if (users[username] === password) {
                   // Redirect to home.html for valid user
                   window.location.href = "home.html";
                 } else {
@@ -221,7 +229,7 @@
                 showPopup();
               }
             })
-            .catch((error) => console.error("Error fetching JSON:", error));
+            .catch((error) => console.error("Erro a buscar o JSON:", error));
         });
     </script>
   </body>
