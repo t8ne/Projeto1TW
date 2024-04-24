@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -230,29 +230,29 @@
         for (let i = 0; i < albums.items.length; i++) {
           const album = albums.items[i];
           albumRows += `
-            <tr id="album_row_${i}">
-              <td>
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="${album.images[0].url}" width="100px" height="100px" alt="${album.name}" />
-                </button>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-header">${album.name}</li>
-                  <li class="dropdown-divider"></li>
-                  <li><a class="dropdown-item"><b>Tracks</b></a></li>
-                  <div class="container">
-                    <div class="row" id="tracks_${i}_${album.id}">
-                      Loading tracks...
-                    </div>
-                  </div>
-                </ul>
-              </td>
-              <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
-              <td>
-                <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-              </td>
-            </tr>
-          `;
+                  <tr id="album_row_${i}">
+                      <td>
+                          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <img src="${album.images[0].url}" width="100px" height="100px" alt="${album.name}" />
+                          </button>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-header">${album.name}</li>
+                              <li class="dropdown-divider"></li>
+                              <li><a class="dropdown-item"><b>Tracks</b></a></li>
+                              <div class="container">
+                                  <div class="row" id="tracks_${i}_${album.id}">
+                                      Loading tracks...
+                                  </div>
+                              </div>
+                          </ul>
+                      </td>
+                      <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
+                      <td>
+                          <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                          <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                      </td>
+                  </tr>
+              `;
 
           fetchTracks(album.id, i);
         }
@@ -275,8 +275,8 @@
           const track = tracks.items[i];
           const duration = millisToMinutesAndSeconds(track.duration_ms);
           tracksHtml += `
-            <div class="col-md-6">${track.name} - ${duration}</div>
-          `;
+                  <div class="col-md-6">${track.name} - ${duration}</div>
+              `;
         }
         document.getElementById(`tracks_${index}_${albumId}`).innerHTML =
           tracksHtml;
@@ -288,43 +288,42 @@
         return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
       };
 
-      // Function to handle editing album name
       const editAlbumName = (index, newName) => {
         const albumNameElement = document.getElementById(`album_name_${index}`);
         albumNameElement.textContent = newName;
       };
 
-      // Function to handle deleting album row
       const deleteAlbumRow = (index) => {
         const rowToDelete = document.getElementById(`album_row_${index}`);
         rowToDelete.remove();
       };
 
-      // Function to add a new row for a new album at the top
       const addNewAlbumRow = () => {
         const newRow = `
-          <tr>
-            <td></td>
-            <td></td>
-            <td>
-              <button class="btn btn-outline-primary edit-button">Editar</button>
-              <button class="btn btn-outline-danger delete-button">Eliminar</button>
-            </td>
-          </tr>
-        `;
-        // Insert the new row at the top of the table
+              <tr>
+                  <td></td>
+                  <td>Sem Nome</td>
+                  <td>
+                      <button class="btn btn-outline-primary edit-button">Editar</button>
+                      <button class="btn btn-outline-danger delete-button">Eliminar</button>
+                  </td>
+              </tr>
+          `;
         document
           .getElementById("albums")
           .insertAdjacentHTML("afterbegin", newRow);
       };
 
-      // Event listener for adding a new album
       document
         .getElementById("addAlbumButton")
         .addEventListener("click", addNewAlbumRow);
 
-      // Event delegation for dynamically added edit buttons
-      document.addEventListener("click", (event) => {
+      document.getElementById("albums").addEventListener("click", (event) => {
+        console.log(event.target);
+        console.log(event.target.classList);
+        console.log(event.target.classList.contains("edit-button"));
+        console.log(event.target.classList.contains("delete-button"));
+
         if (event.target.classList.contains("edit-button")) {
           const index = event.target.closest("tr").id.split("_")[2];
           const newName = prompt("Digite um novo nome para o álbum:");
@@ -332,10 +331,7 @@
             editAlbumName(index, newName);
           }
         }
-      });
 
-      // Event delegation for dynamically added delete buttons
-      document.addEventListener("click", (event) => {
         if (event.target.classList.contains("delete-button")) {
           const index = event.target.closest("tr").id.split("_")[2];
           const confirmDelete = confirm(
@@ -347,7 +343,6 @@
         }
       });
 
-      // Call the function to fetch album information
       infoArista();
     </script>
   </body>
