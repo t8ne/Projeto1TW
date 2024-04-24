@@ -1,5 +1,8 @@
 {
   "users": {
-    "admin": "admin"
+    "admin": "admin",
+    "tone": "1234",
+    "eduardo": "1234",
+    "mateus": "1234"
   }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -137,7 +137,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="home.html">
-          <!-- Adicione o link desejado aqui -->
           <img src="images/logo2.png" alt="Opium Label" />
         </a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -156,13 +155,12 @@
     <div class="login-container">
       <h2>Login 🞹</h2>
       <form class="login-form 🞹" id="login-form">
-        <input type="text" placeholder="Username " required />
-        <input type="password" placeholder="Password" required />
+        <input type="text" placeholder="Username" id="username" required />
+        <input type="password" placeholder="Password" id="password" required />
         <button type="submit">Entrar</button>
       </form>
     </div>
 
-    <!-- Popup -->
     <div class="popup" id="popup" style="display: none">
       <div class="popup-content">
         <h3 style="font-family: 'Old English Text MT', serif">Conta Criada</h3>
@@ -170,23 +168,60 @@
       </div>
     </div>
 
+    <div class="popup" id="popup2" style="display: none">
+      <div class="popup-content">
+        <h3 style="font-family: 'Old English Text MT', serif">Senha Errada</h3>
+        <button class="popup-button" onclick="closePopup()">OK</button>
+      </div>
+    </div>
+
     <script>
-      // Função para exibir o popup
       function showPopup() {
         document.getElementById("popup").style.display = "flex";
       }
 
-      // Função para voltar para a página home
+      function showPopup2() {
+        document.getElementById("popup2").style.display = "flex";
+      }
+
       function returnHome() {
         window.location.href = "home.html";
       }
 
-      // Adiciona um evento de clique ao formulário de login
+      function closePopup() {
+        document.getElementById("popup2").style.display = "none";
+      }
+
       document
         .getElementById("login-form")
         .addEventListener("submit", function (event) {
-          event.preventDefault(); // Impede o envio do formulário
-          showPopup(); // Exibe o popup
+          event.preventDefault(); // Prevent form submission
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Fetch JSON data (replace 'data.json' with your JSON file)
+          fetch("data.json")
+            .then((response) => response.json())
+            .then((data) => {
+              const users = data.users;
+
+              // Check if username exists in JSON data
+              if (users.hasOwnProperty(username)) {
+                // Check if password matches for admin username
+                if (username === "admin" && password === "admin") {
+                  window.location.href = "home.html";
+                } else if (users[username] === password) {
+                  // Redirect to home.html for valid user
+                  window.location.href = "home.html";
+                } else {
+                  showPopup2();
+                }
+              } else {
+                // Allow login for new users (outside of JSON data)
+                showPopup();
+              }
+            })
+            .catch((error) => console.error("Error fetching JSON:", error));
         });
     </script>
   </body>
