@@ -252,10 +252,11 @@
       const fetchTracks = async (albumId, index) => {
         const response = await fetch(
           [
-            "https://run.mocky.io/v3/6696dde0-4222-4612-8b5e-e44045d2af85",
-            "https://run.mocky.io/v3/15670fe0-f584-4307-a64e-329de250cc51",
-            "https://run.mocky.io/v3/8880124f-715f-4352-bc22-d20c85cb2483",
-            "https://run.mocky.io/v3/649dafd4-56ff-4239-af54-c3ec2c4278b8",
+            "https://run.mocky.io/v3/f29d1be9-821b-490a-917c-27fe950beec4",
+            "https://run.mocky.io/v3/c50feded-7a96-433b-8f76-e49f770ffaf9",
+            "https://run.mocky.io/v3/dc2287b8-ca2c-4fc7-b1e8-86e89b7e47cd",
+            "https://run.mocky.io/v3/10d278d5-09c0-4e2c-b437-0f541667d3e1",
+            "https://run.mocky.io/v3/6b393a1c-e30e-4be5-9755-291565cd2bcf",
           ][index]
         );
         const tracks = await response.json();
