@@ -38,9 +38,31 @@ $isLoggedIn = isset($_SESSION['username']);
 </nav>
 
 <style>
-    .create-account-text:hover {
+    .create-account-text {
+        margin-right: 10px;
         color: #000;
         background-color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-family: "Old English Text MT", serif;
+        font-weight: bold;
+    }
+
+    .create-account-text:hover {
+        color: #fff;
+        background-color: #000;
+    }
+
+    .about-text {
+        margin-right: 20px;
+        color: #fff;
+        font-family: "Old English Text MT", serif;
+        text-decoration: none;
+    }
+
+    .about-text:hover {
+        text-decoration: underline;
     }
 
     .dropdown-menu-end {

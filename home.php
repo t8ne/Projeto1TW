@@ -11,6 +11,8 @@ if (session_status() == PHP_SESSION_NONE) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opium Label</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
   <link rel="icon" type="image/png" href="images/logo.png" />
   <style>
     /* Estilos personalizados */
@@ -201,7 +203,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <h1 class="members-title">Members</h1>
 
   <!-- Conteúdo principal -->
-  <div class="container mt-4">
+  <div class="container mt-4 animate-on-scroll">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <!-- Playboi Carti -->
       <div class="col">
@@ -264,6 +266,23 @@ if (session_status() == PHP_SESSION_NONE) {
 
   <!-- Scripts do Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        elements.forEach(function (element) {
+          const position = element.getBoundingClientRect();
+          if (position.top < window.innerHeight && position.bottom >= 0) {
+            element.classList.add('animate__animated', 'animate__fadeIn');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll();
+    });
+  </script>
 </body>
 
 </html>

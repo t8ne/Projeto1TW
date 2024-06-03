@@ -166,13 +166,28 @@
     </div>
   </div>
 
+  <div class="popup" id="popup2" style="display: none">
+    <div class="popup-content">
+      <h3 style="font-family: 'Old English Text MT', serif">Nome de usuário já utilizado.</h3>
+      <button class="popup-button" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
   <script>
     function showPopup() {
       document.getElementById("popup").style.display = "flex";
     }
 
+    function showPopup2() {
+      document.getElementById("popup2").style.display = "flex";
+    }
+
     function returnHome() {
       window.location.href = "home.php";
+    }
+
+    function closePopup() {
+      document.getElementById("popup2").style.display = "none";
     }
 
     document
@@ -193,6 +208,8 @@
           .then((data) => {
             if (data.success) {
               showPopup();
+            } else if (data.error === "username_taken") {
+              showPopup2();
             } else {
               alert("Erro ao criar conta.");
             }

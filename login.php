@@ -28,7 +28,11 @@ if ($result->num_rows > 0) {
     if (password_verify($user_password, $row['password'])) {
         $_SESSION['username'] = $user_name;
         $response["success"] = true;
+    } else {
+        $response["error"] = "incorrect_password";
     }
+} else {
+    $response["error"] = "user_not_found";
 }
 
 echo json_encode($response);

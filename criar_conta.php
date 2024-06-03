@@ -182,6 +182,13 @@
     </div>
   </div>
 
+  <div class="popup" id="popup3" style="display: none">
+    <div class="popup-content">
+      <h3 style="font-family: 'Old English Text MT', serif">Utilizador não encontrado.</h3>
+      <button class="popup-button" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
   <script>
     function showPopup() {
       document.getElementById("popup").style.display = "flex";
@@ -191,12 +198,17 @@
       document.getElementById("popup2").style.display = "flex";
     }
 
+    function showPopup3() {
+      document.getElementById("popup3").style.display = "flex";
+    }
+
     function returnHome() {
-      window.location.href = "home.html";
+      window.location.href = "home.php";
     }
 
     function closePopup() {
       document.getElementById("popup2").style.display = "none";
+      document.getElementById("popup3").style.display = "none";
     }
 
     document
@@ -217,6 +229,8 @@
           .then((data) => {
             if (data.success) {
               window.location.href = "home.php";
+            } else if (data.error === "user_not_found") {
+              showPopup3();
             } else {
               showPopup2();
             }
