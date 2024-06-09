@@ -22,6 +22,21 @@ session_start();
       /* Garante que a imagem de fundo cubra toda a área disponível */
       color: #ffffff;
       /* Define a cor do texto como branco */
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0.65;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .navbar {
+      animation: none !important;
     }
 
     .navbar-brand img {

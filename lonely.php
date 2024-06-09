@@ -13,6 +13,21 @@ session_start();
   <style>
     body {
       margin: 0;
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0.65;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .navbar {
+      animation: none !important;
     }
 
     .image {
@@ -22,7 +37,7 @@ session_start();
       align-items: center;
       width: 100%;
       height: 100vh;
-      background: green;
+      background: black;
       background-image: url("images/destroy-lonely.jpg");
       /* Correção da barra invertida */
       background-size: cover;
@@ -198,6 +213,36 @@ session_start();
       font-family: Arial, sans-serif;
       width: 100%;
     }
+
+    .blurred-content {
+      position: relative;
+    }
+
+    .blurred-content::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: black;
+      font-weight: bold;
+      font-size: 24px;
+      padding: 20px;
+      box-sizing: border-box;
+      flex-direction: column;
+    }
+
+    .blurred-content.logged-out::after {
+      display: flex;
+      content: 'Inicie sessão para continuar a ler';
+    }
   </style>
 </head>
 
@@ -207,7 +252,7 @@ session_start();
 
 
     <div class="destroy-container">
-      <h2>OPIUM</h2>
+      <h2 style="margin-top: -30px;" \>OPIUM</h2>
       <h2>🞹</h2>
       <h2></h2>
       <h2>Destroy Lonely</h2>
@@ -222,23 +267,28 @@ session_start();
       </h3>
     </div>
   </div>
-  <div class="container mt-4">
-    <h1>Álbuns</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Foto do álbum</th>
-          <th>Nome do álbum</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="albums">
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+
+  <div class="container mt-4 blurred-content <?php echo !$isLoggedIn ? 'logged-out' : ''; ?>">
+    <div class="container mt-4">
+      <h1>Álbuns</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Foto do álbum</th>
+            <th>Nome do álbum</th>
+            <?php if ($isAdmin): ?>
+              <th>Ações</th>
+            <?php endif; ?>
+          </tr>
+        </thead>
+        <tbody id="albums">
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
@@ -272,11 +322,13 @@ session_start();
                             </ul>
                         </td>
                         <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
-                        <td>
-                            <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                            <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                        </td>
-                    </tr>
+                        <?php if ($isAdmin): ?>
+                              <td>
+                                <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                              </td>
+            <?php endif; ?>
+          </tr>
           `;
 
         fetchTracks(album.id, i);

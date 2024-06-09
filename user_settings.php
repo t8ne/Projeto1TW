@@ -8,20 +8,49 @@ if (!isset($_SESSION['username'])) {
 include 'database.php';
 
 $user_name = $_SESSION['username'];
+$stmt = $conn->prepare("SELECT password FROM users WHERE user_name = ?");
+$stmt->bind_param("s", $user_name);
+$stmt->execute();
+$stmt->bind_result($hashed_password);
+$stmt->fetch();
+$stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $new_username = $_POST['username'];
-    $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    if (isset($_POST['new_username'])) {
+        $new_username = $_POST['new_username'];
+        $current_password = $_POST['current_password'];
 
-    $sql = "UPDATE users SET user_name = ?, password = ? WHERE user_name = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $new_username, $new_password, $user_name);
+        if (password_verify($current_password, $hashed_password)) {
+            $stmt = $conn->prepare("UPDATE users SET user_name = ? WHERE user_name = ?");
+            $stmt->bind_param("ss", $new_username, $user_name);
+            if ($stmt->execute()) {
+                $_SESSION['username'] = $new_username;
+                echo "<script>alert('User information updated successfully.');</script>";
+            } else {
+                echo "<script>alert('Error updating user information.');</script>";
+            }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Incorrect password.');</script>";
+        }
+    }
 
-    if ($stmt->execute()) {
-        $_SESSION['username'] = $new_username;
-        echo "User information updated successfully.";
-    } else {
-        echo "Error updating user information.";
+    if (isset($_POST['new_password'])) {
+        $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+        $current_password = $_POST['current_password'];
+
+        if (password_verify($current_password, $hashed_password)) {
+            $stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_name = ?");
+            $stmt->bind_param("ss", $new_password, $user_name);
+            if ($stmt->execute()) {
+                echo "<script>alert('Password updated successfully.');</script>";
+            } else {
+                echo "<script>alert('Error updating password.');</script>";
+            }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Incorrect password.');</script>";
+        }
     }
 }
 ?>
@@ -36,126 +65,232 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <style>
         body {
             font-family: Arial, sans-serif;
-            /* Define a fonte do texto */
             margin: 0;
-            /* Remove as margens padrão do corpo da página */
             background-image: url("images/opium.png");
-            /* Define a imagem de fundo */
             background-size: cover;
-            /* Garante que a imagem de fundo cubra toda a área disponível */
             color: #ffffff;
-            /* Define a cor do texto como branco */
         }
 
         .navbar-brand img {
             max-width: 50px;
-            /* Tornar o logotipo um pouco menor */
             height: auto;
         }
 
         .navbar {
             background-color: #000 !important;
-            /* Cor de fundo da barra de navegação preta */
             width: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            margin-top: -150px
         }
 
         .create-account-text {
             margin-right: 10px;
-            /* Espaçamento à direita */
             color: #000;
-            /* Cor do texto preto */
             background-color: #fff;
-            /* Cor de fundo branca */
             padding: 5px 10px;
-            /* Adicionar preenchimento ao redor do texto */
             border-radius: 5px;
-            /* Cantos arredondados */
             text-decoration: none;
-            /* Remover sublinhado */
             font-family: "Old English Text MT", serif;
-            /* Definir a fonte Old English */
             font-weight: bold;
-            /* Tornar o texto em negrito */
         }
 
         .create-account-text:hover {
             color: #fff;
-            /* Mudar a cor do texto para branco ao passar o mouse */
             background-color: #000;
-            /* Mudar a cor de fundo para preto ao passar o mouse */
         }
 
         .about-text {
             margin-right: 20px;
-            /* Espaçamento à direita */
             color: #fff;
-            /* Cor do texto branco */
             font-family: "Old English Text MT", serif;
-            /* Definir a fonte Old English */
             text-decoration: none;
-            /* Remover sublinhado */
         }
 
         .about-text:hover {
             text-decoration: underline;
-            /* Adicionar sublinhado ao passar o mouse */
         }
 
         .content {
             text-align: center;
-            /* Centraliza todo o conteúdo */
             margin: 0 auto;
-            /* Centraliza o conteúdo horizontalmente */
             max-width: 800px;
-            /* Define a largura máxima do conteúdo */
+            background-color: rgba(128, 128, 128, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            color: #000;
         }
 
-        h1 {
-            font-family: "Old English Text MT", serif;
-            /* Define a fonte Old English para o título */
-            font-size: 36px;
-            /* Define o tamanho do título */
-            margin-top: 140px;
-            /* Define a margem superior do título */
-            margin-bottom: 280px;
-            /* Define a margem inferior do título */
-            color: #ffffff;
-            /* Define a cor do texto como branco */
-            font-size: 80px;
+        .container {
+            margin-top: 150px;
         }
 
-        p {
-            font-weight: bold;
-            /* Define o texto em negrito */
-            color: #ffffff;
-            /* Define a cor do texto como branco */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .current-info {
             margin-bottom: 20px;
-            /* Define a margem inferior do texto */
-            font-size: 16px;
+            font-size: 18px;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            color: #000;
+            background-color: #fff;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popup-content {
+            background-color: #111111;
+            font-size: 20px;
+            color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: "Old English Text MT", serif;
+            width: 25%;
+        }
+
+        .popup-button {
+            margin-top: 40px;
+            background-color: #070707;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            width: 48%;
+        }
+
+        .popup-button.cancel {
+            background-color: #aaa;
+            margin-right: 4%;
         }
     </style>
 </head>
 
 <body>
     <?php include 'navbar.php'; ?>
-    <div class="container mt-5">
-        <h2 style="margin-top: 10%;">Definições</h2>
-        <form method="POST" action="user_settings.php">
-            <div class="mb-3">
-                <label for="username" class="form-label">Novo Nome</label>
-                <input type="text" class="form-control" placeholder="Nome" id="username" name="username" required>
+    <div class="container">
+        <div class="content">
+            <h2>Definições</h2>
+            <div class="current-info">
+                <p>Nome de Usuário: <?php echo $user_name; ?></p>
+                <p>Palavra-Passe: <span id="password-toggle">****</span> <button class="toggle-password"
+                        onclick="showPasswordPopup('view')">Mostrar</button></p>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Nova Palavra-Passe</label>
-                <input type="password" class="form-control" placeholder="Palavra-Passe" id="password" name="password"
-                    required>
-            </div>
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-        </form>
+            <form method="POST" id="update-username-form">
+                <div class="mb-3">
+                    <label for="new_username" class="form-label">Novo Nome</label>
+                    <input type="text" class="form-control" id="new_username" name="new_username" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showPasswordPopup('username')">Atualizar
+                    Nome</button>
+            </form>
+            <br>
+            <form method="POST" id="update-password-form">
+                <div class="mb-3">
+                    <label for="new_password" class="form-label">Nova Palavra-Passe</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showPasswordPopup('password')">Atualizar
+                    Palavra-Passe</button>
+            </form>
+        </div>
     </div>
+
+    <div class="popup" id="password-popup">
+        <div class="popup-content">
+            <h3 style="font-family: 'Old English Text MT', serif">Confirme a Palavra-Passe</h3>
+            <form id="password-confirmation-form">
+                <input type="password" class="form-control" placeholder="Palavra-Passe" id="current_password"
+                    name="current_password" required>
+                <button type="button" class="popup-button cancel" onclick="closePasswordPopup()">Cancelar</button>
+                <button type="submit" class="popup-button">OK</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let passwordVisible = false;
+        let updateType = '';
+        let realPassword = '';
+
+        function showPasswordPopup(type) {
+            updateType = type;
+            document.getElementById('password-popup').style.display = 'flex';
+        }
+
+        function closePasswordPopup() {
+            document.getElementById('password-popup').style.display = 'none';
+        }
+
+        document.getElementById('password-confirmation-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const currentPasswordInput = document.getElementById('current_password').value;
+
+            if (updateType === 'view') {
+                fetch('verify_password.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        password: currentPasswordInput,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            realPassword = currentPasswordInput;
+                            document.getElementById('password-toggle').textContent = realPassword;
+                            closePasswordPopup();
+                        } else {
+                            alert('Palavra-Passe Incorreta.');
+                        }
+                    });
+            } else if (updateType === 'username') {
+                const newUsername = document.getElementById('new_username').value;
+                if (newUsername && currentPasswordInput) {
+                    document.getElementById('update-username-form').submit();
+                } else {
+                    alert('Preencha este campo.');
+                }
+            } else if (updateType === 'password') {
+                const newPassword = document.getElementById('new_password').value;
+                if (newPassword && currentPasswordInput) {
+                    document.getElementById('update-password-form').submit();
+                } else {
+                    alert('Preencha este campo.');
+                }
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>

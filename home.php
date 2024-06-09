@@ -28,6 +28,21 @@ if (session_status() == PHP_SESSION_NONE) {
       position: relative;
       min-height: 100vh;
       /* Garantir que o corpo ocupe pelo menos toda a altura da janela */
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0.65;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .navbar {
+      animation: none !important;
     }
 
     .artist-card {
