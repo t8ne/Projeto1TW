@@ -46,125 +46,124 @@ while ($row = $result->fetch_assoc()) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="images/logo2.png" />
     <style>
         body {
             font-family: Arial, sans-serif;
-            /* Define a fonte do texto */
             margin: 0;
-            /* Remove as margens padrão do corpo da página */
             background-image: url("images/opium.png");
-            /* Define a imagem de fundo */
             background-size: cover;
-            /* Garante que a imagem de fundo cubra toda a área disponível */
             color: #ffffff;
-            /* Define a cor do texto como branco */
-        }
-
-        .navbar-brand img {
-            max-width: 50px;
-            /* Tornar o logotipo um pouco menor */
-            height: auto;
         }
 
         .navbar {
             background-color: #000 !important;
-            /* Cor de fundo da barra de navegação preta */
             width: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            z-index: 999;
         }
 
-        .create-account-text {
-            margin-right: 10px;
-            /* Espaçamento à direita */
-            color: #000;
-            /* Cor do texto preto */
-            background-color: #fff;
-            /* Cor de fundo branca */
-            padding: 5px 10px;
-            /* Adicionar preenchimento ao redor do texto */
-            border-radius: 5px;
-            /* Cantos arredondados */
-            text-decoration: none;
-            /* Remover sublinhado */
+        .navbar-brand img {
+            max-width: 50px;
+            height: auto;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
             font-family: "Old English Text MT", serif;
-            /* Definir a fonte Old English */
-            font-weight: bold;
-            /* Tornar o texto em negrito */
         }
 
-        .create-account-text:hover {
-            color: #fff;
-            /* Mudar a cor do texto para branco ao passar o mouse */
-            background-color: #000;
-            /* Mudar a cor de fundo para preto ao passar o mouse */
+        .navbar-nav .nav-link:hover {
+            color: #aaa !important;
         }
 
-        .about-text {
-            margin-right: 20px;
-            /* Espaçamento à direita */
-            color: #fff;
-            /* Cor do texto branco */
-            font-family: "Old English Text MT", serif;
-            /* Definir a fonte Old English */
-            text-decoration: none;
-            /* Remover sublinhado */
-        }
-
-        .about-text:hover {
-            text-decoration: underline;
-            /* Adicionar sublinhado ao passar o mouse */
-        }
-
-        .content {
+        .container-custom {
+            background-color: rgba(128, 128, 128, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 150px;
             text-align: center;
-            /* Centraliza todo o conteúdo */
-            margin: 0 auto;
-            /* Centraliza o conteúdo horizontalmente */
-            max-width: 800px;
-            /* Define a largura máxima do conteúdo */
         }
 
-        h1 {
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            border: 1px solid #444;
+        }
+
+        table th {
+            background-color: #444;
+        }
+
+        table td {
+            background-color: #333;
+        }
+
+        .btn {
+            margin: 5px;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            border-color: #d43f3a;
+        }
+
+        .btn-primary {
+            background-color: #0275d8;
+            border-color: #025aa5;
+        }
+
+        .btn-success {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .form-inline input {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .form-inline .btn {
+            padding: 10px 20px;
+        }
+
+        h2,
+        h3 {
             font-family: "Old English Text MT", serif;
-            /* Define a fonte Old English para o título */
-            font-size: 36px;
-            /* Define o tamanho do título */
-            margin-top: 140px;
-            /* Define a margem superior do título */
-            margin-bottom: 280px;
-            /* Define a margem inferior do título */
-            color: #ffffff;
-            /* Define a cor do texto como branco */
-            font-size: 80px;
         }
 
-        p {
-            font-weight: bold;
-            /* Define o texto em negrito */
-            color: #ffffff;
-            /* Define a cor do texto como branco */
-            margin-bottom: 20px;
-            /* Define a margem inferior do texto */
-            font-size: 16px;
+        .logo img {
+            max-width: 100px;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
     <?php include 'navbar.php'; ?>
-    <div class="container mt-5">
+
+    <div class="container container-custom">
         <h2>Dashboard</h2>
-        <table class="table">
+        <table class="table table-dark table-hover">
             <thead>
-                <tr style="color: white;">
+                <tr>
                     <th>ID de Utilizador</th>
                     <th>Nome</th>
                     <th>Ações</th>
@@ -172,7 +171,7 @@ while ($row = $result->fetch_assoc()) {
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
-                    <tr style="color: white;">
+                    <tr>
                         <td><?php echo $user['user_id']; ?></td>
                         <td><?php echo $user['user_name']; ?></td>
                         <td>
@@ -184,8 +183,10 @@ while ($row = $result->fetch_assoc()) {
                             <form method="POST" style="display:inline-block;">
                                 <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
                                 <input type="hidden" name="action" value="edit">
-                                <input type="text" name="username" placeholder="Novo Nome" required>
-                                <input type="password" name="password" placeholder="Nova Palavra-Passe" required>
+                                <input type="text" name="username" placeholder="Novo Nome"
+                                    class="form-control d-inline w-auto" required>
+                                <input type="password" name="password" placeholder="Nova Palavra-Passe"
+                                    class="form-control d-inline w-auto" required>
                                 <button type="submit" class="btn btn-primary">Editar</button>
                             </form>
                         </td>
@@ -194,13 +195,14 @@ while ($row = $result->fetch_assoc()) {
             </tbody>
         </table>
         <h3>Criar Novo Utilizador</h3>
-        <form method="POST">
+        <form method="POST" class="form-inline">
             <input type="hidden" name="action" value="create">
-            <input type="text" name="username" placeholder="Nome" required>
-            <input type="password" name="password" placeholder="Palavra-Passe" required>
+            <input type="text" name="username" placeholder="Nome" class="form-control" required>
+            <input type="password" name="password" placeholder="Palavra-Passe" class="form-control" required>
             <button type="submit" class="btn btn-success">Criar</button>
         </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>

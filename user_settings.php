@@ -20,7 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $new_username = $_POST['new_username'];
         $current_password = $_POST['current_password'];
 
-        if (password_verify($current_password, $hashed_password)) {
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE user_name = ?");
+        $stmt->bind_param("s", $new_username);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($new_username == $user_name) {
+            echo "<script>showPopup('Nome de utilizador já usado por si.');</script>";
+        } elseif ($count > 0) {
+            echo "<script>showPopup('Nome de utilizador em uso.');</script>";
+        } elseif (password_verify($current_password, $hashed_password)) {
             $stmt = $conn->prepare("UPDATE users SET user_name = ? WHERE user_name = ?");
             $stmt->bind_param("ss", $new_username, $user_name);
             if ($stmt->execute()) {
@@ -131,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #000;
         }
 
-        .btn-primary {
+        .btn-dark {
             width: 100%;
         }
 
@@ -209,7 +220,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="new_username" class="form-label">Novo Nome</label>
                     <input type="text" class="form-control" id="new_username" name="new_username" required>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="showPasswordPopup('username')">Atualizar
+                <button type="button" class="btn btn-dark" id="update-username-button"
+                    onclick="validateNewUsername()">Atualizar
                     Nome</button>
             </form>
             <br>
@@ -218,7 +230,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="new_password" class="form-label">Nova Palavra-Passe</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="showPasswordPopup('password')">Atualizar
+                <button type="button" class="btn btn-dark" id="update-password-button"
+                    onclick="validateNewPassword()">Atualizar
                     Palavra-Passe</button>
             </form>
         </div>
@@ -239,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script>
         let passwordVisible = false;
         let updateType = '';
-        let realPassword = '';
+        let realPassword = '<?php echo $hashed_password; ?>';
 
         function showPasswordPopup(type) {
             updateType = type;
@@ -248,6 +261,137 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         function closePasswordPopup() {
             document.getElementById('password-popup').style.display = 'none';
+        }
+
+        function validateNewUsername() {
+            const newUsername = document.getElementById('new_username').value;
+            if (!newUsername) {
+                showPopup('Preencha este campo.');
+            } else if (newUsername === "<?php echo $user_name; ?>") {
+                showPopup('Nome de utilizador já usado por si.');
+            } else if (newUsername.length < 3) {
+                showPopup('O nome de utilizador deve ter pelo menos 3 caracteres.');
+            } else if (newUsername.length > 20) {
+                showPopup('O nome de utilizador deve ter menos de 20 caracteres.');
+            } else if (newUsername.includes(' ')) {
+                showPopup('O nome de utilizador não deve conter espaços.');
+            } else if (newUsername.includes('/')) {
+                showPopup('O nome de utilizador não deve conter /');
+            } else if (newUsername.includes('\\')) {
+                showPopup('O nome de utilizador não deve conter \\');
+            } else if (newUsername.includes(':')) {
+                showPopup('O nome de utilizador não deve conter :');
+            } else if (newUsername.includes('*')) {
+                showPopup('O nome de utilizador não deve conter *');
+            } else if (newUsername.includes('?')) {
+                showPopup('O nome de utilizador não deve conter ?');
+            } else if (newUsername.includes('"')) {
+                showPopup('O nome de utilizador não deve conter "');
+            } else if (newUsername.includes('<')) {
+                showPopup('O nome de utilizador não deve conter <');
+            } else if (newUsername.includes('>')) {
+                showPopup('O nome de utilizador não deve conter >');
+            } else if (newUsername.includes('|')) {
+                showPopup('O nome de utilizador não deve conter |');
+            } else if (newUsername.includes(';')) {
+                showPopup('O nome de utilizador não deve conter ;');
+            } else {
+                fetch('check_username.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: newUsername,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            showPopup('Nome de utilizador em uso.');
+                        } else {
+                            showPasswordPopup('username');
+                        }
+                    });
+            }
+        }
+
+
+
+
+        function validateNewPassword() {
+            const newPassword = document.getElementById('new_password').value;
+            if (!newPassword) {
+                showPopup('Preencha este campo.');
+            } else if (newPassword.length < 4) {
+                showPopup('A palavra-passe deve ter pelo menos 4 caracteres.');
+            } else if (newPassword.length > 20) {
+                showPopup('A palavra-passe deve ter menos de 20 caracteres.');
+            } else if (newPassword === realPassword) {
+                showPopup('Palavra-passe não pode ser a mesma que a anterior.');
+            } else if (newPassword === '<?php echo $hashed_password; ?>') {
+                showPopup('Palavra-passe não pode ser a mesma que a anterior.');
+            } else if (newPassword.includes(' ')) {
+                showPopup('A palavra-passe não deve conter espaços.');
+            } else if (newPassword.includes('/')) {
+                showPopup('A palavra-passe não deve conter /');
+            } else if (newPassword.includes('\\')) {
+                showPopup('A palavra-passe não deve conter \\');
+            } else if (newPassword.includes(':')) {
+                showPopup('A palavra-passe não deve conter :');
+            } else if (newPassword.includes('*')) {
+                showPopup('A palavra-passe não deve conter *');
+            } else if (newPassword.includes('?')) {
+                showPopup('A palavra-passe não deve conter ?');
+            } else if (newPassword.includes('"')) {
+                showPopup('A palavra-passe não deve conter "');
+            } else if (newPassword.includes('<')) {
+                showPopup('A palavra-passe não deve conter <');
+            } else if (newPassword.includes('>')) {
+                showPopup('A palavra-passe não deve conter >');
+            } else if (newPassword.includes('|')) {
+                showPopup('A palavra-passe não deve conter |');
+            } else if (newPassword.includes(';')) {
+                showPopup('A palavra-passe não deve conter ;');
+            }
+            else {
+                fetch('verify_password.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        password: newPassword,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showPopup('Palavra-passe já utilizada.');
+                        } else {
+                            showPasswordPopup('password');
+                        }
+                    });
+            }
+        }
+
+        function showPopup(message) {
+            const popup = document.createElement('div');
+            popup.classList.add('popup');
+            popup.innerHTML = `
+                <div class="popup-content">
+                    <p>${message}</p>
+                    <button class="popup-button" onclick="closePopup(this)">OK</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            popup.style.display = 'flex';
+        }
+
+        function closePopup(button) {
+            const popup = button.closest('.popup');
+            popup.style.display = 'none';
+            document.body.removeChild(popup);
         }
 
         document.getElementById('password-confirmation-form').addEventListener('submit', function (event) {
