@@ -209,7 +209,7 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
   <script>
     const infoArista = async () => {
       const response = await fetch(
-        "https://run.mocky.io/v3/066ef73b-146d-407e-b7d3-e6a2e83a1113"
+        "https://run.mocky.io/v3/18c3cfbb-a07f-47d5-b28f-823b6427e57a"
       );
       const albums = await response.json();
 
@@ -235,10 +235,10 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
             </td>
             <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
             <?php if ($isAdmin): ?>
-                        <td>
-                          <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                          <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                        </td>
+                            <td>
+                              <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                              <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                            </td>
             <?php endif; ?>
           </tr>
         `;
@@ -252,10 +252,10 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
     const fetchTracks = async (albumId, index) => {
       const response = await fetch(
         [
-          "https://run.mocky.io/v3/72c659cc-d7cf-4f4b-bd3f-be218fb068b6",
-          "https://run.mocky.io/v3/3fdd0e17-10a7-473f-b64d-14cec0a411b6",
-          "https://run.mocky.io/v3/a91aa6a2-32e8-4c87-ba68-87adef7f0093",
-          "https://run.mocky.io/v3/e31e21f1-70cf-4c1b-b130-859ec9dd9c95",
+          "https://run.mocky.io/v3/6c2b34f6-6384-4a8a-b3a5-717553b380de",
+          "https://run.mocky.io/v3/8f74ddee-152d-4d22-8866-d1a2b58bbed9",
+          "https://run.mocky.io/v3/3464993c-4c2e-4063-a1fe-666827f76506",
+          "https://run.mocky.io/v3/9746cb5d-0f54-45d7-aed5-425038f1bb5a",
         ][index]
       );
       const tracks = await response.json();

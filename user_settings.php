@@ -296,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else if (newUsername.includes(';')) {
                 showPopup('O nome de utilizador não deve conter ;');
             } else {
-                fetch('check_username.php', {
+                fetch('check_username.php', { //Bro what é obvio que não dá se esta cena não existe, foda-se.
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

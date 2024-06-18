@@ -291,7 +291,7 @@ session_start();
   <script>
     const infoArista = async () => {
       const response = await fetch(
-        "https://run.mocky.io/v3/7ee30933-f980-493e-a9c5-d8d474a59d95"
+        "https://run.mocky.io/v3/8d6448d2-bdca-444a-8562-d2fd281113a3"
       );
       const albums = await response.json();
 
@@ -317,10 +317,10 @@ session_start();
                         </td>
                         <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
                         <?php if ($isAdmin): ?>
-                              <td>
-                                <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                                <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                              </td>
+                                  <td>
+                                    <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                    <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                                  </td>
             <?php endif; ?>
           </tr>
           `;
@@ -334,11 +334,11 @@ session_start();
     const fetchTracks = async (albumId, index) => {
       const response = await fetch(
         [
-          "https://run.mocky.io/v3/f29d1be9-821b-490a-917c-27fe950beec4",
-          "https://run.mocky.io/v3/c50feded-7a96-433b-8f76-e49f770ffaf9",
-          "https://run.mocky.io/v3/dc2287b8-ca2c-4fc7-b1e8-86e89b7e47cd",
-          "https://run.mocky.io/v3/10d278d5-09c0-4e2c-b437-0f541667d3e1",
-          "https://run.mocky.io/v3/6b393a1c-e30e-4be5-9755-291565cd2bcf",
+          "https://run.mocky.io/v3/172449f7-77b3-42cf-b518-29e9f8a0fdba",
+          "https://run.mocky.io/v3/d5720541-1a6a-4be8-badb-7888a746f718",
+          "https://run.mocky.io/v3/a52e6665-933e-490b-b9e0-b7d53d829ed1",
+          "https://run.mocky.io/v3/0f1778ed-bf21-4844-90b2-03bbe8320376",
+          "https://run.mocky.io/v3/718c39f5-d77c-48a0-a417-b5da23b74f7b",
         ][index]
       );
       const tracks = await response.json();

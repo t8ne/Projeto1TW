@@ -291,7 +291,7 @@ session_start();
   <script>
     const infoArista = async () => {
       const response = await fetch(
-        "https://run.mocky.io/v3/b78983ec-1802-4c98-b5e1-a6fcc47fdc90"
+        "https://run.mocky.io/v3/925e224c-1179-45b1-840d-bf47fa6847ab"
       );
       const albums = await response.json();
 
@@ -317,10 +317,10 @@ session_start();
                         </td>
                         <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
                         <?php if ($isAdmin): ?>
-                              <td>
-                                <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                                <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                              </td>
+                                  <td>
+                                    <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                    <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                                  </td>
             <?php endif; ?>
           </tr>
           `;
@@ -334,10 +334,10 @@ session_start();
     const fetchTracks = async (albumId, index) => {
       const response = await fetch(
         [
-          "https://run.mocky.io/v3/d1ea2178-3bbb-4a5a-a3e6-873e12f944e7",
-          "https://run.mocky.io/v3/3766cb0e-9a7e-49b7-bef0-82482ed7a18c",
-          "https://run.mocky.io/v3/cd659ebe-8674-499a-9331-24cf4b1d7981",
-          "https://run.mocky.io/v3/cd1350f6-c22e-4288-b512-d94cb2837328",
+          "https://run.mocky.io/v3/bf86f436-faa7-4ce0-abcf-6d0a86ce56b9",
+          "https://run.mocky.io/v3/3b0313ae-318f-44c9-9f9f-d226fa9ed613",
+          "https://run.mocky.io/v3/db2b478c-9b03-4b7f-9fd1-ee54f910f3e7",
+          "https://run.mocky.io/v3/3dc02e66-a242-4447-8131-429a8a7ef733",
         ][index]
       );
       const tracks = await response.json();
