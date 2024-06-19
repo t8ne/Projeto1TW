@@ -235,9 +235,28 @@ session_start();
       flex-direction: column;
     }
 
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-family: "Old English Text MT";
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
     .blurred-content.logged-out::after {
       display: flex;
       content: 'Inicie sessão para continuar a ler';
+    }
+
+    #inicio {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
