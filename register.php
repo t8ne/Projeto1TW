@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents("php://input"), true);
 $user_name = $data['username'];
-$user_password = password_hash($data['password'], PASSWORD_DEFAULT);
+$user_password = $data['password'];
 
 $response = ["success" => false];
 

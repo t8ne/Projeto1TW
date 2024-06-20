@@ -18,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     } elseif ($action == 'edit') {
         $new_username = $_POST['username'];
-        $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $new_password = $_POST['password'];
         $sql = "UPDATE users SET user_name = ?, password = ? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssi", $new_username, $new_password, $user_id);
         $stmt->execute();
     } elseif ($action == 'create') {
         $new_username = $_POST['username'];
-        $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $new_password = $_POST['password'];
         $user_id = rand(1, 1000000);
         while ($conn->query("SELECT * FROM users WHERE user_id = $user_id")->num_rows > 0) {
             $user_id = rand(1, 1000000);
