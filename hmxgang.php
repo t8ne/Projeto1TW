@@ -209,13 +209,22 @@ session_start();
       font-family: Arial, sans-serif;
       width: 100%;
     }
+    
+    .texto{
+      font-family: "Old English Text MT", serif;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      transform: translate(0, -1400%);
+    }
 
     .blurred-content {
       position: relative;
     }
 
     .blurred-content::after {
-      content: '';
+      content: 'Inicie sessão para continuar a ler';
       position: absolute;
       top: 0;
       left: 0;
@@ -227,36 +236,17 @@ session_start();
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: black;
+      color: white;
       font-weight: bold;
       font-size: 24px;
       padding: 20px;
       box-sizing: border-box;
       flex-direction: column;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      font-family: "Old English Text MT";
-      cursor: pointer;
-      background-color: black;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      display: inline-block;
+      pointer-events: none;
     }
 
     .blurred-content.logged-out::after {
       display: flex;
-      content: 'Inicie sessão para continuar a ler';
-    }
-
-    #inicio {
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   </style>
 </head>
@@ -264,8 +254,6 @@ session_start();
 <body>
   <?php include 'navbar.php'; ?>
   <div class="image">
-
-
     <div class="homixide-container">
       <h2 style="margin-top: -30px;">OPIUM</h2>
       <h2>🞹</h2>
@@ -303,6 +291,12 @@ session_start();
       </table>
     </div>
   </div>
+
+  <a href="/TesteOpium/criar_contafr.php" class="login-link">
+    <div class="texto">
+      <p>Inicie a sessão para continuar a ler</p>
+    </div>
+  </a>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
