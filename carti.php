@@ -179,7 +179,7 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
       width: 100%;
     }
 
-    .texto{
+    .texto {
       font-family: "Old English Text MT", serif;
       align-items: center;
       justify-content: center;
@@ -215,16 +215,16 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
     }
 
     .logged-out .blurred-content::after {
-      display:flex;
+      display: flex;
     }
 
     .logged-in .blurred-content::after {
-      display:none;
+      display: none;
     }
   </style>
 </head>
 
-<body class="logged-out">
+<body class="<?php echo $isLoggedIn ? 'logged-in' : 'logged-out'; ?>">
   <?php include 'navbar.php'; ?>
   <div class="image">
     <div class="carti-container">
@@ -243,7 +243,7 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
     </div>
   </div>
 
-  <div class="container mt-4 blurred-content <?php echo !$isLoggedIn ? 'logged-out' : ''; ?>">
+  <div class="container mt-4 blurred-content">
     <h1>Álbuns</h1>
     <table class="table">
       <thead>
@@ -264,11 +264,13 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
     </table>
   </div>
 
-  <a href="/ProjetoTW/criar_conta.php" class="login-link">
-    <div class="texto logged-out" >
-      <p>Inicie a sessão para continuar a ler</p>
-    </div>
-  </a>
+  <?php if (!$isLoggedIn): ?>
+    <a href="/ProjetoTW/criar_conta.php" class="login-link">
+      <div class="texto logged-out">
+        <p>Inicie a sessão para continuar a ler</p>
+      </div>
+    </a>
+  <?php endif; ?>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -302,10 +304,10 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
             </td>
             <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
             <?php if ($isAdmin): ?>
-                            <td>
-                              <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                              <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                            </td>
+                                      <td>
+                                        <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                        <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                                      </td>
             <?php endif; ?>
           </tr>
         `;

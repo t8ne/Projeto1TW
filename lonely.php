@@ -1,5 +1,7 @@
 <?php
 session_start();
+$isLoggedIn = isset($_SESSION['username']);
+$isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
 ?>
 <!DOCTYPE html>
 <html>
@@ -214,7 +216,7 @@ session_start();
       width: 100%;
     }
 
-    .texto{
+    .texto {
       font-family: "Old English Text MT", serif;
       align-items: center;
       justify-content: center;
@@ -250,16 +252,16 @@ session_start();
     }
 
     .logged-out .blurred-content::after {
-      display:flex;
+      display: flex;
     }
 
     .logged-in .blurred-content::after {
-      display:none;
+      display: none;
     }
   </style>
 </head>
 
-<body class="logged-out">
+<body class="<?php echo $isLoggedIn ? 'logged-in' : 'logged-out'; ?>">
   <?php include 'navbar.php'; ?>
   <div class="image">
     <div class="destroy-container">
@@ -279,34 +281,34 @@ session_start();
     </div>
   </div>
 
-  <div class="container mt-4 blurred-content <?php echo !$isLoggedIn ? 'logged-out' : ''; ?>">
-    <div class="container mt-4">
-      <h1>Álbuns</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Foto do álbum</th>
-            <th>Nome do álbum</th>
-            <?php if ($isAdmin): ?>
-              <th>Ações</th>
-            <?php endif; ?>
-          </tr>
-        </thead>
-        <tbody id="albums">
-          <tr>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="container mt-4 blurred-content">
+    <h1>Álbuns</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Foto do álbum</th>
+          <th>Nome do álbum</th>
+          <?php if ($isAdmin): ?>
+            <th>Ações</th>
+          <?php endif; ?>
+        </tr>
+      </thead>
+      <tbody id="albums">
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <a href="/ProjetoTW/criar_conta.php" class="login-link">
-    <div class="texto logged-out" >
-      <p>Inicie a sessão para continuar a ler</p>
-    </div>
-  </a>
+  <?php if (!$isLoggedIn): ?>
+    <a href="/ProjetoTW/criar_conta.php" class="login-link">
+      <div class="texto logged-out">
+        <p>Inicie a sessão para continuar a ler</p>
+      </div>
+    </a>
+  <?php endif; ?>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -340,10 +342,10 @@ session_start();
                         </td>
                         <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
                         <?php if ($isAdmin): ?>
-                                  <td>
-                                    <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                                    <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                                  </td>
+                                        <td>
+                                          <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                          <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                                        </td>
             <?php endif; ?>
           </tr>
           `;
