@@ -248,10 +248,18 @@ session_start();
     .blurred-content.logged-out::after {
       display: flex;
     }
+
+    .logged-out .blurred-content::after {
+      display:flex;
+    }
+
+    .logged-in .blurred-content::after {
+      display:none;
+    }
   </style>
 </head>
 
-<body>
+<body class="logged-out">
   <?php include 'navbar.php'; ?>
   <div class="image">
     <div class="homixide-container">
@@ -292,8 +300,8 @@ session_start();
     </div>
   </div>
 
-  <a href="/TesteOpium/criar_contafr.php" class="login-link">
-    <div class="texto">
+  <a href="/ProjetoTW/criar_conta.php" class="login-link">
+    <div class="texto logged-out" >
       <p>Inicie a sessão para continuar a ler</p>
     </div>
   </a>
