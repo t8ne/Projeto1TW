@@ -13,7 +13,7 @@ session_start();
   <style>
     body {
       margin: 0;
-      animation: fadeIn 2s;
+      animation: fadeIn 1s;
     }
 
     @keyframes fadeIn {
@@ -209,12 +209,21 @@ session_start();
       width: 100%;
     }
 
+    .texto{
+      font-family: "Old English Text MT", serif;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      transform: translate(0, -1400%);
+    }
+
     .blurred-content {
       position: relative;
     }
 
     .blurred-content::after {
-      content: '';
+      content: 'Inicie sessão para continuar a ler';
       position: absolute;
       top: 0;
       left: 0;
@@ -226,26 +235,29 @@ session_start();
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: black;
+      color: white;
       font-weight: bold;
       font-size: 24px;
       padding: 20px;
       box-sizing: border-box;
       flex-direction: column;
+      pointer-events: none;
     }
 
-    .blurred-content.logged-out::after {
-      display: flex;
-      content: 'Inicie sessão para continuar a ler';
+    .logged-out .blurred-content::after {
+      display:flex;
     }
+
+    .logged-in .blurred-content::after {
+      display:none;
+    }
+
   </style>
 </head>
 
-<body>
+<body class="logged-out">
   <?php include 'navbar.php'; ?>
   <div class="image">
-
-
     <div class="ken-container">
       <h2 style="margin-top: -30px;">OPIUM</h2>
       <h2>🞹</h2>
@@ -284,6 +296,12 @@ session_start();
       </table>
     </div>
   </div>
+
+  <a href="/ProjetoTW/criar_conta.php" class="login-link">
+    <div class="texto logged-out" >
+      <p>Inicie a sessão para continuar a ler</p>
+    </div>
+  </a>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

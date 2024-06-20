@@ -1,7 +1,6 @@
 <?php
 session_start();
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -14,7 +13,7 @@ session_start();
   <style>
     body {
       margin: 0;
-      animation: fadeIn 2s;
+      animation: fadeIn 1s;
     }
 
     @keyframes fadeIn {
@@ -243,10 +242,6 @@ session_start();
       box-sizing: border-box;
       flex-direction: column;
       pointer-events: none;
-    }
-
-    .blurred-content.logged-out::after {
-      display: flex;
     }
 
     .logged-out .blurred-content::after {

@@ -15,7 +15,7 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
   <style>
     body {
       margin: 0;
-      animation: fadeIn 2s;
+      animation: fadeIn 1s;
     }
 
     @keyframes fadeIn {
@@ -131,12 +131,69 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
       text-decoration: underline;
     }
 
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,
+          0,
+          0,
+          0.5);
+      /* Cor de fundo escura com opacidade */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      /* Para garantir que o popup esteja na frente de outros elementos */
+    }
+
+    .popup-content {
+      background-color: #111111;
+      font-size: 10px;
+      color: #fff;
+      padding: 40px;
+      /* Aumenta o espaçamento interno */
+      border-radius: 10px;
+      text-align: center;
+      font-family: "Old English Text MT", serif;
+      /* Definir a fonte Old English */
+      width: 25%;
+      /* Define a largura do popup */
+    }
+
+    .popup-button {
+      margin-top: 40px;
+      background-color: #070707;
+      /* Altera a cor de fundo para preto */
+      color: #fff;
+      /* Altera a cor do texto para branco */
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      /* Torna o texto em negrito */
+      font-family: Arial, sans-serif;
+      width: 100%;
+    }
+
+    .texto{
+      font-family: "Old English Text MT", serif;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      transform: translate(0, -1400%);
+    }
+
     .blurred-content {
       position: relative;
     }
 
     .blurred-content::after {
-      content: '';
+      content: 'Inicie sessão para continuar a ler';
       position: absolute;
       top: 0;
       left: 0;
@@ -148,22 +205,26 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: black;
+      color: white;
       font-weight: bold;
       font-size: 24px;
       padding: 20px;
       box-sizing: border-box;
       flex-direction: column;
+      pointer-events: none;
     }
 
-    .blurred-content.logged-out::after {
-      display: flex;
-      content: 'Inicie sessão para continuar a ler';
+    .logged-out .blurred-content::after {
+      display:flex;
+    }
+
+    .logged-in .blurred-content::after {
+      display:none;
     }
   </style>
 </head>
 
-<body>
+<body class="logged-out">
   <?php include 'navbar.php'; ?>
   <div class="image">
     <div class="carti-container">
@@ -202,6 +263,12 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
       </tbody>
     </table>
   </div>
+
+  <a href="/ProjetoTW/criar_conta.php" class="login-link">
+    <div class="texto logged-out" >
+      <p>Inicie a sessão para continuar a ler</p>
+    </div>
+  </a>
 
   <!-- Bootstrap JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
