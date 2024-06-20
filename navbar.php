@@ -30,7 +30,7 @@ $isLoggedIn = isset($_SESSION['username']);
                         <li><a class="dropdown-item" href="logout.php">Sair</a></li>
                     </ul>
                 <?php else: ?>
-                    <a class="nav-link create-account-text" href="criar_conta.php">Login</a>
+                    <a class="nav-link create-account-text" href="entrar.php">Login</a>
                 <?php endif; ?>
             </li>
         </ul>

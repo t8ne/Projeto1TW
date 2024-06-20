@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['username'] != 'admin') {
-    header('Location: criar_conta.html');
+    header('Location: entrar.php');
     exit();
 }
 

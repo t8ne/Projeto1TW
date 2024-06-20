@@ -297,7 +297,7 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
   </div>
 
   <?php if (!$isLoggedIn): ?>
-    <a href="/ProjetoTW/criar_conta.php" class="login-link">
+    <a href="/ProjetoTW/entrar.php" class="login-link">
       <div class="texto logged-out">
         <p>Inicie a sessão para continuar a ler</p>
       </div>
@@ -336,10 +336,10 @@ $isAdmin = $isLoggedIn && $_SESSION['username'] === 'admin';
                         </td>
                         <td id="album_name_${i}">${album.name} - ${album.release_date}</td>
                         <?php if ($isAdmin): ?>
-                                                <td>
-                                                  <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
-                                                  <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
-                                                </td>
+                                                  <td>
+                                                    <button class="btn btn-outline-primary edit-button" data-index="${i}">Editar</button>
+                                                    <button class="btn btn-outline-danger delete-button" data-index="${i}">Eliminar</button>
+                                                  </td>
             <?php endif; ?>
           </tr>
           `;

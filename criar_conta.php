@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
+  <title>Criar Conta</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="icon" type="image/png" href="images/logo.png" />
   <style>
@@ -22,7 +22,6 @@
     .login-container {
       background-color: white;
       padding: 30px;
-      padding-bottom: 20px;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -145,27 +144,19 @@
           <a class="nav-link about-text" href="about.php">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link create-account-text" href="criar_conta.php">Login</a>
+          <a class="nav-link create-account-text" href="entrar.php">Login</a>
         </li>
       </ul>
     </div>
   </nav>
 
   <div class="login-container">
-    <h2>Login 🞹</h2>
-    <form class="login-form 🞹" id="login-form">
+    <h2>Criar Conta 🞹</h2>
+    <form class="login-form 🞹" id="register-form">
       <input type="text" placeholder="Nome de Usuário" id="username" required />
       <input type="password" placeholder="Palavra-Passe" id="password" required />
-      <button type="submit">Entrar</button>
+      <button type="submit">Criar Conta</button>
     </form>
-    <p style="
-          text-align: center;
-          font-weight: bold;
-          font-size: 20px;
-          margin-top: 25px;
-        ">
-      <a href="criar_contafr.php" class="create-account-text">Não tens conta?</a>
-    </p>
   </div>
 
   <div class="popup" id="popup" style="display: none">
@@ -177,14 +168,7 @@
 
   <div class="popup" id="popup2" style="display: none">
     <div class="popup-content">
-      <h3 style="font-family: 'Old English Text MT', serif">Senha Errada</h3>
-      <button class="popup-button" onclick="closePopup()">OK</button>
-    </div>
-  </div>
-
-  <div class="popup" id="popup3" style="display: none">
-    <div class="popup-content">
-      <h3 style="font-family: 'Old English Text MT', serif">Utilizador não encontrado.</h3>
+      <h3 style="font-family: 'Old English Text MT', serif">Nome de usuário já utilizado.</h3>
       <button class="popup-button" onclick="closePopup()">OK</button>
     </div>
   </div>
@@ -198,27 +182,22 @@
       document.getElementById("popup2").style.display = "flex";
     }
 
-    function showPopup3() {
-      document.getElementById("popup3").style.display = "flex";
-    }
-
     function returnHome() {
       window.location.href = "home.php";
     }
 
     function closePopup() {
       document.getElementById("popup2").style.display = "none";
-      document.getElementById("popup3").style.display = "none";
     }
 
     document
-      .getElementById("login-form")
+      .getElementById("register-form")
       .addEventListener("submit", function (event) {
         event.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        fetch("login.php", {
+        fetch("register.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -228,11 +207,11 @@
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              window.location.href = "home.php";
-            } else if (data.error === "user_not_found") {
-              showPopup3();
-            } else {
+              showPopup();
+            } else if (data.error === "username_taken") {
               showPopup2();
+            } else {
+              alert("Erro ao criar conta.");
             }
           })
           .catch((error) => console.error("Error:", error));
