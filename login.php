@@ -25,7 +25,7 @@ $response = ["success" => false];
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    if (password_verify($user_password, $row['password'])) {
+    if ($user_password == $row['password']) {  // Removed password_verify for non-hashed password comparison
         $_SESSION['username'] = $user_name;
         $response["success"] = true;
     } else {
