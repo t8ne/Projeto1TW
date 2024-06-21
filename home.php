@@ -209,7 +209,9 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="images/RIP.gif" class="d-block w-100" alt="..." />
-        <div class="carousel-caption">Opium</div>
+        <div class="carousel-caption">Opium
+                                        *
+        </div>
       </div>
     </div>
   </div>
